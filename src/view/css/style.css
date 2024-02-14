@@ -1,0 +1,59 @@
+/* 0C254B */
+
+.root {
+    -fx-background-image: url("file:img/background.jpg");
+    -fx-background-size: cover;
+}
+
+.login {
+    -fx-background-color: white;
+    -fx-padding: 50px;
+    -fx-min-width: 450px;
+    -fx-max-width: 450px;
+    -fx-background-radius: 20px;
+}
+
+Label {
+    -fx-text-fill: #0085c3;
+    -fx-font-size: 18px;
+}
+
+TextField, PasswordField {
+    -fx-padding: 5px;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #0085c3;
+    -fx-max-width: 250px;
+    -fx-font-size: 16px;
+    -fx-text-fill: black;
+}
+
+.btn1 {
+    -fx-text-fill: #0C254B;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+    -fx-font-size: 18px;
+    -fx-transition: 0.3s;
+}
+
+.btn1:hover {
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+
+
+.btn {
+    -fx-text-fill: rgba(0, 133, 195, 0.7);
+    -fx-border-width: 2;
+    -fx-border-color: rgba(0, 133, 195, 0.7);
+    -fx-padding: 5px 25px 5px 25px;
+    -fx-background-color: transparent;
+    -fx-font-size: 22px;
+    -fx-transition: 0.3s;
+}
+
+.btn:hover {
+    -fx-border-color: rgb(0, 133, 195);
+    -fx-text-fill: rgb(0, 133, 195);
+    -fx-cursor: hand;
+}
