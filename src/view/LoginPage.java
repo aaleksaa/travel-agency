@@ -1,5 +1,7 @@
 package view;
 
+import implementation.general.MessageDisplay;
+import implementation.general.Navigation;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -9,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -47,12 +50,15 @@ public class LoginPage extends Application {
         pfPassword.setPromptText("Password");
         btnLogin.getStyleClass().add("btn");
         btnSignIn.getStyleClass().add("btn1");
-        hbSignIn.setAlignment(Pos.CENTER_RIGHT);
+        hbSignIn.setAlignment(Pos.CENTER);
         logo.setFitHeight(150);
         logo.setFitWidth(150);
 
         vbLogin.getChildren().addAll(logo, tfUsername, pfPassword, btnLogin, hbSignIn);
 
         root.getChildren().add(vbLogin);
+
+        btnSignIn.setOnAction(e -> Navigation.toRegistrationPage(stage));
+        btnLogin.setOnAction(e -> Navigation.toClientPage(stage));
     }
 }

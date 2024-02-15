@@ -13,6 +13,14 @@
     -fx-background-radius: 20px;
 }
 
+.registration {
+    -fx-background-color: white;
+    -fx-padding: 50px;
+    -fx-min-width: 550px;
+    -fx-max-width: 550px;
+    -fx-background-radius: 20px;
+}
+
 Label {
     -fx-text-fill: #0085c3;
     -fx-font-size: 18px;
@@ -43,17 +51,19 @@ TextField, PasswordField {
 
 
 .btn {
-    -fx-text-fill: rgba(0, 133, 195, 0.7);
-    -fx-border-width: 2;
-    -fx-border-color: rgba(0, 133, 195, 0.7);
-    -fx-padding: 5px 25px 5px 25px;
-    -fx-background-color: transparent;
-    -fx-font-size: 22px;
+    -fx-text-fill: white;
+    -fx-border-width: 1;
+    -fx-border-color: rgb(0, 133, 195);
+    -fx-background-color: rgb(0, 133, 195);
+    -fx-padding: 5px 30px 5px 30px;
     -fx-transition: 0.3s;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-font-size: 22px;
 }
 
 .btn:hover {
-    -fx-border-color: rgb(0, 133, 195);
-    -fx-text-fill: rgb(0, 133, 195);
+    -fx-background-color: rgba(0, 133, 195, 0.7);
+    -fx-border-color: rgba(0, 133, 195, 0.7);
     -fx-cursor: hand;
 }

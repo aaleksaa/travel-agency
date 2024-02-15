@@ -1,0 +1,47 @@
+.root {
+    -fx-background-image: url("file:img/background.jpg");
+    -fx-background-size: cover;
+}
+
+.menu {
+    -fx-background-color: white;
+    -fx-min-height: 55px;
+    -fx-max-height: 55px;
+    -fx-padding: 10px;
+}
+
+.title {
+    -fx-text-fill: #0C254B;
+    -fx-font-weight: bold;
+    -fx-font-size: 22px;
+}
+
+.menu Button {
+    -fx-text-fill: rgba(204, 88, 3, 0.7);
+    -fx-background-color: transparent;
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-transition: 0.3s;
+    -fx-padding: 15px;
+}
+
+.menu Button:hover {
+    -fx-text-fill: #cc5803;
+    -fx-cursor: hand;
+    -fx-border-width: 0 0 3px 0;
+    -fx-border-color: #0C254B;
+}
+
+.clicked {
+    -fx-text-fill: #cc5803;
+    -fx-cursor: hand;
+    -fx-border-width: 0 0 3px 0;
+    -fx-border-color: #0C254B;
+}
+
+.sidebar {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+    -fx-padding: 30px;
+    -fx-effect: dropshadow(two-pass-box, #AAAAAA, 5, 0, 0, 4);
+}
