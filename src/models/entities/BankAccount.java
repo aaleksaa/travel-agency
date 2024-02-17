@@ -1,4 +1,4 @@
-package models.user;
+package models.entities;
 
 public class BankAccount {
     private final int id;
@@ -35,5 +35,8 @@ public class BankAccount {
 
     public boolean isAgencyBankAccount() {
         return jmbg.length() == 10;
+    }
+    public boolean isAccountNumberMatching(String inputAccountNumber) {
+        return accountNumber.equals(inputAccountNumber);
     }
 }

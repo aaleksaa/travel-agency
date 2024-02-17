@@ -1,4 +1,6 @@
-package models.arrangement;
+package models.entities;
+
+import models.enums.Transport;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -101,11 +103,22 @@ public class Arrangement {
         return daysUntilTrip() >= PAYMENT_DEADLINE_END && daysUntilTrip() <= PAYMENT_DEADLINE_START;
     }
 
-    @Override
-    public String toString() {
-        if (accommodation != null)
-            return name + " Destinacija: " + destination + " Prevoz: " + transport + " Polazak: " + tripDate + " Dolazak: " + arrivalDate + " Cijena: " + price + " " + accommodation + "\n";
-        else
-            return name + " Destinacija: " + destination + " Prevoz: " + transport + " Polazak: " + tripDate + " Dolazak: " + arrivalDate + " Cijena: " + price + "\n";
+    public boolean isDestinationMatching(String inputDestination) {
+        return destination.equals(inputDestination);
     }
+
+    public boolean isPriceLower(double amount) {
+        return calculateTotalPrice() <= amount;
+    }
+
+
+//    @Override
+//    public String toString() {
+//        if (accommodation != null)
+//            return name + " Destinacija: " + destination + " Prevoz: " + transport + " Polazak: " + tripDate + " Dolazak: " + arrivalDate + " Cijena: " + price + " " + accommodation + "\n";
+//        else
+//            return name + " Destinacija: " + destination + " Prevoz: " + transport + " Polazak: " + tripDate + " Dolazak: " + arrivalDate + " Cijena: " + price + "\n";
+//    }
+
+
 }

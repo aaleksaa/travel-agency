@@ -1,5 +1,6 @@
 package view;
 
+import controllers.LoginController;
 import implementation.general.MessageDisplay;
 import implementation.general.Navigation;
 import javafx.application.Application;
@@ -17,8 +18,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class LoginPage extends Application {
+    private LoginController controller;
     @Override
     public void start(Stage stage) throws Exception {
+        controller = new LoginController();
+
         VBox root = new VBox(10);
         root.setAlignment(Pos.CENTER);
 
@@ -59,6 +63,6 @@ public class LoginPage extends Application {
         root.getChildren().add(vbLogin);
 
         btnSignIn.setOnAction(e -> Navigation.toRegistrationPage(stage));
-        btnLogin.setOnAction(e -> Navigation.toClientPage(stage));
+        btnLogin.setOnAction(e -> controller.loginBtnEvent(stage, tfUsername, pfPassword));
     }
 }

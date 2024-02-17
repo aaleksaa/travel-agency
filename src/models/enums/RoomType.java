@@ -1,4 +1,4 @@
-package models.arrangement;
+package models.enums;
 
 public enum RoomType {
     SINGLE_ROOM("Singleroom"),

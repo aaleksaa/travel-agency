@@ -1,7 +1,6 @@
 package implementation.client;
 
-import database.Database;
-import models.reservation.Reservation;
+import models.entities.Reservation;
 
 import java.util.List;
 
@@ -11,6 +10,7 @@ public class ArrangementReservation {
 
     public static void addReservation(List<Reservation> reservations, Reservation reservation) {
         reservations.add(reservation);
+
     }
 
 

@@ -1,7 +1,6 @@
-package models.reservation;
+package models.entities;
 
-import models.arrangement.Arrangement;
-import models.user.Client;
+import models.enums.ReservationType;
 
 public class Reservation {
     private final Client client;
@@ -38,6 +37,14 @@ public class Reservation {
         return paidAmount;
     }
 
+    public void setPaidAmount(double paidAmount) {
+        this.paidAmount = paidAmount;
+    }
+
+    public void setReservationType(ReservationType reservationType) {
+        this.reservationType = reservationType;
+    }
+
     public boolean isTotallyPaid() {
         return paidAmount == totalPrice;
     }
@@ -57,6 +64,23 @@ public class Reservation {
     public double unpaidAmount() {
         return totalPrice - paidAmount;
     }
+
+    public boolean isClientMatching(Client c) {
+        return client.getId() == c.getId();
+    }
+
+    public boolean isArrangementMatching(Arrangement a) {
+        return arrangement.getId() == a.getId();
+    }
+
+    public boolean isReservedByClient(Client c, Arrangement a) {
+        return isClientMatching(c) && isArrangementMatching(a);
+    }
+
+    public boolean areClientAndTypeMatching(Client c, ReservationType rt) {
+        return isClientMatching(c) && reservationType == rt;
+    }
+
 
     @Override
     public String toString() {

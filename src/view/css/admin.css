@@ -43,3 +43,9 @@
 .btn1, .btn2 {
     -fx-cursor: hand;
 }
+
+.title {
+    -fx-fill: #0C254B;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}

@@ -1,15 +1,15 @@
 package database;
 
 import interfaces.RowMapper;
-import models.arrangement.Accommodation;
-import models.arrangement.Arrangement;
-import models.arrangement.RoomType;
-import models.arrangement.Transport;
-import models.reservation.Reservation;
-import models.user.Admin;
-import models.user.BankAccount;
-import models.user.Client;
-import models.user.User;
+import models.entities.Accommodation;
+import models.entities.Arrangement;
+import models.enums.RoomType;
+import models.enums.Transport;
+import models.entities.Reservation;
+import models.entities.Admin;
+import models.entities.BankAccount;
+import models.entities.Client;
+import models.entities.User;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -161,8 +161,10 @@ public class Database {
         List<Client> clients = getClients();
         List<Admin> admins = getAdmins();
         List<User> users = new ArrayList<>();
+
         users.addAll(admins);
         users.addAll(clients);
+
         return users;
     }
 

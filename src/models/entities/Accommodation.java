@@ -1,4 +1,6 @@
-package models.arrangement;
+package models.entities;
+
+import models.enums.RoomType;
 
 public class Accommodation {
     private final int id;
@@ -35,8 +37,9 @@ public class Accommodation {
         return pricePerNight;
     }
 
+
     @Override
     public String toString() {
-        return "[Accommodation] " + name + " - " + starReview + " - " + roomType + " - " + pricePerNight;
+        return "[Accommodation] " + name + " | " + starReview + " | " + roomType;
     }
 }

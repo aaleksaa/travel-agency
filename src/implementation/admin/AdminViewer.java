@@ -1,8 +1,8 @@
 package implementation.admin;
 
 import database.Database;
-import models.user.Admin;
-import models.user.User;
+import models.entities.Admin;
+import models.entities.User;
 
 import java.sql.SQLException;
 import java.util.List;

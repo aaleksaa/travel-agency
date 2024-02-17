@@ -1,4 +1,4 @@
-package models.user;
+package models.entities;
 
 public class User {
     protected int id;
