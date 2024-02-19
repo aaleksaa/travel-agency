@@ -11,8 +11,8 @@ public class Arrangement {
     private final String name;
     private final String destination;
     private final Transport transport;
-    private final LocalDate arrivalDate;
     private final LocalDate tripDate;
+    private final LocalDate arrivalDate;
     private final double price;
     private final Accommodation accommodation;
 
@@ -24,13 +24,13 @@ public class Arrangement {
     public final static Comparator<Arrangement> tripDateAscending = (o1, o2) -> o1.tripDate.compareTo(o2.tripDate);
     public final static Comparator<Arrangement> tripDateDescending = (o1, o2) -> o2.tripDate.compareTo(o1.tripDate);
 
-    public Arrangement(int id, String name, String destination, Transport transport, LocalDate arrivalDate, LocalDate tripDate, double price, Accommodation accommodation) {
+    public Arrangement(int id, String name, String destination, Transport transport, LocalDate tripDate, LocalDate arrivalDate, double price, Accommodation accommodation) {
         this.id = id;
         this.name = name;
         this.destination = destination;
         this.transport = transport;
-        this.arrivalDate = arrivalDate;
         this.tripDate = tripDate;
+        this.arrivalDate = arrivalDate;
         this.price = price;
         this.accommodation = accommodation;
     }
@@ -111,14 +111,16 @@ public class Arrangement {
         return calculateTotalPrice() <= amount;
     }
 
+    private String oneDayTripToString() {
+        return name + " | " + destination + " | " + calculateTotalPrice() + " | " + " | " + transport + " | " + arrivalDate + " | " + tripDate;
+    }
 
-//    @Override
-//    public String toString() {
-//        if (accommodation != null)
-//            return name + " Destinacija: " + destination + " Prevoz: " + transport + " Polazak: " + tripDate + " Dolazak: " + arrivalDate + " Cijena: " + price + " " + accommodation + "\n";
-//        else
-//            return name + " Destinacija: " + destination + " Prevoz: " + transport + " Polazak: " + tripDate + " Dolazak: " + arrivalDate + " Cijena: " + price + "\n";
-//    }
+    private String tripToString() {
+        return name + " | " + destination + " | " + calculateTotalPrice() + " | " + " | " + transport + " | " + arrivalDate + " | " + tripDate + " | " + accommodation;
+    }
 
-
+    @Override
+    public String toString() {
+        return accommodation == null ? tripToString() : oneDayTripToString();
+    }
 }

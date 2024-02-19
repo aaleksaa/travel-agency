@@ -45,7 +45,66 @@
 }
 
 .title {
-    -fx-fill: #0C254B;
+    -fx-text-fill: #0C254B;
     -fx-font-size: 20px;
     -fx-font-weight: bold;
+}
+
+.title2 {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #cc5803;
+}
+
+.list-view {
+    -fx-background-color: #f5f5f5;
+    -fx-font-size: 16px;
+}
+
+.list-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #333333;
+    -fx-padding: 10;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.1) , 5, 0.0 , 0 , 1 );
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+.list-cell:hover {
+    -fx-background-color: #ecf0f1;
+    -fx-cursor: hand;
+}
+
+.list-cell:selected {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}
+
+.list-view:focused {
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+.list-view:focused .list-cell:selected {
+    -fx-background-color: #cc5803;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: #ecf0f1;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: #ecf0f1;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #cc5803;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: #bdc3c7;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-background-color: #ffffff;
+    -fx-shape: "M0,0 L5,5 L10,0 Z";
 }

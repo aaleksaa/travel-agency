@@ -1,5 +1,7 @@
 package view;
 
+import controllers.AdminController;
+import implementation.client.ArrangementViewer;
 import implementation.general.Navigation;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -13,9 +15,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import models.entities.Admin;
+import models.entities.Arrangement;
+import models.entities.Client;
+import models.entities.Reservation;
 
 public class AdminPage extends Application {
-    private Admin admin;
+    private final Admin admin;
+    private AdminController controller;
 
     public AdminPage(Admin admin) {
         this.admin = admin;
@@ -23,6 +29,7 @@ public class AdminPage extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        controller = new AdminController();
         HBox root = new HBox(20);
 
         setupScene(root, stage, 4);
@@ -40,10 +47,10 @@ public class AdminPage extends Application {
         VBox vbMenu = new VBox(25);
         vbSidebar.getChildren().addAll(img, vbMenu);
 
-        Button btnAdminPanel = new Button("Admini");
-        Button btnReservations = new Button("Lista rezervacija");
-        Button btnAddArrangement = new Button("Dodaj putovanje/izlet");
-        Button btnCancelArrangement = new Button("Otkaži putovanje/izlet");
+        Button btnAdminPanel = new Button("Admin Panel");
+        Button btnReservations = new Button("Reservations List");
+        Button btnAddArrangement = new Button("Add Arrangement");
+        Button btnCancelArrangement = new Button("Cancel Arrangement");
         Button btnLogout = new Button("Logout");
         vbMenu.getChildren().addAll(btnAdminPanel, btnReservations, btnAddArrangement, btnCancelArrangement, btnLogout);
 
@@ -81,7 +88,7 @@ public class AdminPage extends Application {
         VBox vbCancelArrangement = new VBox(20);
 
         Text txtTitle = new Text("Cancel arrangement");
-        ListView<String> lvArrangements = new ListView<>();
+        ListView<Arrangement> lvArrangements = new ListView<>();
         Button btnCancel = new Button("Cancel");
         Label lblMessage = new Label();
 
@@ -92,7 +99,7 @@ public class AdminPage extends Application {
         lvArrangements.setPrefWidth(700);
         lvArrangements.setPrefHeight(350);
         btnCancel.getStyleClass().add("btn2");
-       // lvArrangements.getItems().addAll(ArrangementViewer.getArrangementsOnOffer(controller.getAgency().getArrangements()));
+        lvArrangements.getItems().addAll(ArrangementViewer.arrangementsOnOffer(controller.getAgency().getArrangements()));
 
 //        btnCancel.setOnAction(e -> {
 //            try {
@@ -108,18 +115,18 @@ public class AdminPage extends Application {
     private void reservationsGUI(HBox root) {
         VBox vbReservations = new VBox(15);
 
-        HBox hbRevenue = new HBox(150);
-        Label lblRevenue = new Label("Agency revenue: 45214.25" );
-        Label lblToPay = new Label("Total remaining amount: 12145.21");
+        HBox hbRevenue = new HBox(250);
+        Label lblRevenue = new Label(controller.showRevenue());
+        Label lblToPay = new Label(controller.showTotalRemaining());
         hbRevenue.getChildren().addAll(lblRevenue, lblToPay);
 
-        ListView<String> lvReservations = new ListView<>();
-      //  lvReservations.getItems().addAll(controller.getAgency().getReservations());
+        ListView<Reservation> lvReservations = new ListView<>();
+        lvReservations.getItems().addAll(controller.getAgency().getReservations());
         Label lblInfo = new Label();
 
         VBox vbClients = new VBox(10);
-        Label lblClients = new Label("Ovaj aranžman su rezervisali:");
-        ListView<String> lvClients = new ListView<>();
+        Label lblClients = new Label("This arrangement is reserved by:");
+        ListView<Client> lvClients = new ListView<>();
         vbClients.getChildren().addAll(lblClients, lvClients);
 
         vbReservations.getChildren().addAll(hbRevenue, lvReservations, lblInfo, vbClients);
@@ -129,12 +136,14 @@ public class AdminPage extends Application {
         vbReservations.getStyleClass().add("rightSide");
         lvReservations.setPrefWidth(700);
         vbClients.setVisible(false);
+        lblClients.getStyleClass().add("title2");
+        lblInfo.getStyleClass().add("title2");
 
 
-//        lvReservations.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-//            reservationItemClick(newSelection, lblInfo, lvClients);
-//            vbClients.setVisible(true);
-//        });
+        lvReservations.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            controller.reservationItemEvent(newSelection, lblInfo, lvClients);
+            vbClients.setVisible(true);
+        });
 
         root.getChildren().add(vbReservations);
     }

@@ -81,6 +81,9 @@ public class Reservation {
         return isClientMatching(c) && reservationType == rt;
     }
 
+    public boolean isWithinThreeDayDeadline() {
+        return !isTotallyPaid() && arrangement.isInDeadline();
+    }
 
     @Override
     public String toString() {
