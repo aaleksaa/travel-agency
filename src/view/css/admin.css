@@ -108,3 +108,25 @@
     -fx-background-color: #ffffff;
     -fx-shape: "M0,0 L5,5 L10,0 Z";
 }
+
+TextField, PasswordField {
+    -fx-padding: 5px;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #cc5803;
+    -fx-max-width: 200px;
+    -fx-font-size: 16px;
+    -fx-text-fill: black;
+}
+
+.error {
+    -fx-text-fill: red;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.success {
+    -fx-text-fill: green;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}

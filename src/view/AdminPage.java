@@ -1,13 +1,13 @@
 package view;
 
 import controllers.AdminController;
+import implementation.admin.AdminViewer;
 import implementation.client.ArrangementViewer;
 import implementation.general.Navigation;
+import implementation.general.MessageDisplay;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -18,6 +18,9 @@ import models.entities.Admin;
 import models.entities.Arrangement;
 import models.entities.Client;
 import models.entities.Reservation;
+import models.entities.Agency;
+
+import java.sql.SQLException;
 
 public class AdminPage extends Application {
     private final Admin admin;
@@ -47,25 +50,25 @@ public class AdminPage extends Application {
         VBox vbMenu = new VBox(25);
         vbSidebar.getChildren().addAll(img, vbMenu);
 
-        Button btnAdminPanel = new Button("Admin Panel");
+        Button btnAdmins = new Button("Admin Panel");
         Button btnReservations = new Button("Reservations List");
         Button btnAddArrangement = new Button("Add Arrangement");
         Button btnCancelArrangement = new Button("Cancel Arrangement");
         Button btnLogout = new Button("Logout");
-        vbMenu.getChildren().addAll(btnAdminPanel, btnReservations, btnAddArrangement, btnCancelArrangement, btnLogout);
+        vbMenu.getChildren().addAll(btnAdmins, btnReservations, btnAddArrangement, btnCancelArrangement, btnLogout);
 
         vbSidebar.getStyleClass().add("sidebar");
         img.setFitWidth(150);
         img.setFitHeight(150);
-        btnAdminPanel.getStyleClass().add("btn1");
+        btnAdmins.getStyleClass().add("btn1");
         btnAddArrangement.getStyleClass().add("btn1");
         btnCancelArrangement.getStyleClass().add("btn1");
         btnReservations.getStyleClass().add("btn1");
         btnLogout.getStyleClass().add("btn2");
 
-//        btnAdminPanel.setOnAction(e -> setupScene(root, stage, 1));
+        btnAdmins.setOnAction(e -> setupScene(root, stage, 1));
         btnReservations.setOnAction(e -> setupScene(root, stage, 2));
-//        btnAddArrangement.setOnAction(e -> setupScene(root, stage, 3));
+        btnAddArrangement.setOnAction(e -> setupScene(root, stage, 3));
         btnCancelArrangement.setOnAction(e -> setupScene(root, stage, 4));
         btnLogout.setOnAction(e -> Navigation.toLoginPage(stage));
 
@@ -77,9 +80,9 @@ public class AdminPage extends Application {
         sidebarGUI(root, stage);
 
         switch (scene) {
-//            case 1: adminsGUI(root); break;
+            case 1: adminsGUI(root); break;
             case 2: reservationsGUI(root); break;
-//            case 3: addArrangementGUI(root); break;
+            case 3: addArrangementGUI(root); break;
             case 4: cancelArrangementGUI(root); break;
         }
     }
@@ -101,23 +104,62 @@ public class AdminPage extends Application {
         btnCancel.getStyleClass().add("btn2");
         lvArrangements.getItems().addAll(ArrangementViewer.arrangementsOnOffer(controller.getAgency().getArrangements()));
 
-//        btnCancel.setOnAction(e -> {
-//            try {
-//                controller.cancelBtnClick(lvArrangements.getSelectionModel().getSelectedItem(), lblMessage, lvArrangements);
-//            } catch (SQLException ex) {
-//                MessageDisplayer.showInformationAlert(Agency.DATABASE_ERROR_MESSAGE);
-//            }
-//        });
+        btnCancel.setOnAction(e -> {
+            try {
+                controller.cancelBtnEvent(lvArrangements.getSelectionModel().getSelectedItem(), lblMessage, lvArrangements);
+            } catch (SQLException ex) {
+                MessageDisplay.showAlert(Agency.DATABASE_ERROR, Alert.AlertType.INFORMATION);
+            }
+        });
 
         root.getChildren().add(vbCancelArrangement);
+    }
+
+    private void addArrangementGUI(HBox root) {
+
+    }
+
+    private void adminsGUI(HBox root) {
+        VBox vbAdmins = new VBox(10);
+        HBox hbInfo = new HBox(420);
+        Label lblAdmins = new Label("Admins List");
+        Label lblCounter = new Label(controller.printAdminCounter());
+        hbInfo.getChildren().addAll(lblAdmins, lblCounter);
+
+        ListView<Admin> lv = new ListView<>();
+        lv.getItems().addAll(AdminViewer.getAdmins(controller.getAgency().getUsers()));
+
+        VBox vbAdd = new VBox(15);
+        Label lblAdd = new Label("Add new admin");
+        TextField tfFirstName = new TextField();
+        TextField tfLastName = new TextField();
+        TextField tfUsername = new TextField();
+        Button btnAdd = new Button("Add");
+        vbAdd.getChildren().addAll(lblAdd, tfFirstName, tfLastName, tfUsername, btnAdd);
+
+        vbAdmins.getChildren().addAll(hbInfo, lv, vbAdd);
+        root.getChildren().add(vbAdmins);
+
+        tfFirstName.setPromptText("First name");
+        tfLastName.setPromptText("Last name");
+        tfUsername.setPromptText("Username");
+        lv.setPrefWidth(700);
+        lv.setPrefHeight(300);
+        btnAdd.getStyleClass().add("btn2");
+        lblAdd.getStyleClass().add("title");
+        vbAdmins.getStyleClass().add("rightSide");
+        lblAdmins.getStyleClass().add("title");
+        lblCounter.getStyleClass().add("title");
+
+        btnAdd.setOnAction(e -> controller.addAdminEvent(tfFirstName, tfLastName, tfUsername, lblCounter, lv));
     }
 
     private void reservationsGUI(HBox root) {
         VBox vbReservations = new VBox(15);
 
         HBox hbRevenue = new HBox(250);
-        Label lblRevenue = new Label(controller.showRevenue());
-        Label lblToPay = new Label(controller.showTotalRemaining());
+        Label lblRevenue = new Label(controller.printRevenue());
+        Label lblToPay = new Label(controller.printTotalRemaining());
         hbRevenue.getChildren().addAll(lblRevenue, lblToPay);
 
         ListView<Reservation> lvReservations = new ListView<>();

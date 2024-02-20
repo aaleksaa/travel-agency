@@ -1,5 +1,6 @@
 package view;
 
+import controllers.RegistrationController;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,8 +14,11 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class RegistrationPage extends Application {
+    private RegistrationController controller;
+
     @Override
     public void start(Stage stage) throws Exception {
+        controller = new RegistrationController();
         VBox root = new VBox(10);
         root.setAlignment(Pos.CENTER);
         registrationGUI(stage, root);
@@ -28,9 +32,9 @@ public class RegistrationPage extends Application {
 
     public void registrationGUI(Stage stage, VBox root) {
         VBox vbRegistration = new VBox(20);
-        HBox hbForm = new HBox(20);
-        VBox vbLeft = new VBox(10);
-        VBox vbRight = new VBox(10);
+        HBox hbForm = new HBox(30);
+        VBox vbLeft = new VBox(15);
+        VBox vbRight = new VBox(15);
         hbForm.getChildren().addAll(vbLeft, vbRight);
         ImageView logo = new ImageView(new Image("file:img/logo.png"));
 
@@ -52,6 +56,7 @@ public class RegistrationPage extends Application {
 
         vbRegistration.getStyleClass().add("registration");
         vbRegistration.setAlignment(Pos.TOP_CENTER);
+        hbForm.setAlignment(Pos.CENTER);
         logo.setFitHeight(150);
         logo.setFitWidth(150);
         btnSignIn.getStyleClass().add("btn");
@@ -65,5 +70,17 @@ public class RegistrationPage extends Application {
         pfConfirm.setPromptText("Confirm password");
 
         root.getChildren().add(vbRegistration);
+
+        btnSignIn.setOnAction(e -> controller.signInBtnEvent(
+                stage,
+                tfFirstName,
+                tfLastName,
+                tfPhoneNumber,
+                tfJmbg,
+                tfBankNumber,
+                tfUsername,
+                pfPassword,
+                pfConfirm
+        ));
     }
 }

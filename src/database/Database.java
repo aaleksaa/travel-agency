@@ -180,6 +180,24 @@ public class Database {
         connection.close();
     }
 
+    public static void registerClient(int id, String firstName, String lastName, String phoneNumber, String jmbg, String accountNumber, String username, String password) throws SQLException {
+        DBConnect();
+        String SQLQuery = "INSERT INTO klijent (id, ime, prezime, broj_telefona, jmbg, broj_racuna, korisnicko_ime, lozinka) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
+        preparedStatement.setInt(1, id);
+        preparedStatement.setString(2, firstName);
+        preparedStatement.setString(3, lastName);
+        preparedStatement.setString(4, phoneNumber);
+        preparedStatement.setString(5, jmbg);
+        preparedStatement.setString(6, accountNumber);
+        preparedStatement.setString(7, username);
+        preparedStatement.setString(8, password);
+
+        preparedStatement.executeUpdate();
+        connection.close();
+    }
+
     public static void registerAdmin(int id, String firstName, String lastName, String username, String password) throws SQLException {
         DBConnect();
         String sqlQuery = "INSERT INTO admin (id, ime, prezime, korisnicko_ime, lozinka) VALUES (?, ?, ?, ?, ?)";
@@ -190,6 +208,16 @@ public class Database {
         preparedStatement.setString(3, lastName);
         preparedStatement.setString(4, username);
         preparedStatement.setString(5, password);
+
+        preparedStatement.executeUpdate();
+        connection.close();
+    }
+
+    public static void deleteObject(int id, String table, String where) throws SQLException {
+        DBConnect();
+        String SQLQuery = "DELETE FROM " + table + " WHERE " + where + " = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
+        preparedStatement.setInt(1, id);
 
         preparedStatement.executeUpdate();
         connection.close();

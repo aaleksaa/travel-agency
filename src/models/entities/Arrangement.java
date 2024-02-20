@@ -112,15 +112,15 @@ public class Arrangement {
     }
 
     private String oneDayTripToString() {
-        return name + " | " + destination + " | " + calculateTotalPrice() + " | " + " | " + transport + " | " + arrivalDate + " | " + tripDate;
+        return name + " | " + destination + " | " + calculateTotalPrice()  + " | " + transport + " | " + arrivalDate + " | " + tripDate;
     }
 
     private String tripToString() {
-        return name + " | " + destination + " | " + calculateTotalPrice() + " | " + " | " + transport + " | " + arrivalDate + " | " + tripDate + " | " + accommodation;
+        return name + " | " + destination + " | " + calculateTotalPrice()  + " | " + transport + " | " + arrivalDate + " | " + tripDate + " | " + accommodation;
     }
 
     @Override
     public String toString() {
-        return accommodation == null ? tripToString() : oneDayTripToString();
+        return accommodation == null ? oneDayTripToString() : tripToString();
     }
 }

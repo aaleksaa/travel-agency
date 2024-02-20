@@ -4,8 +4,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 
 public class MessageDisplay {
-    public static void showErrorAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+    public static void showAlert(String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
         alert.setTitle("Travelsphere - alert");
         alert.setHeaderText(null);
         alert.setContentText(message);

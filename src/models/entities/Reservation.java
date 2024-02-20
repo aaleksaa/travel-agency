@@ -85,6 +85,10 @@ public class Reservation {
         return !isTotallyPaid() && arrangement.isInDeadline();
     }
 
+    public boolean isRefundable(Arrangement arr) {
+        return isArrangementMatching(arr) && !isCanceled();
+    }
+
     @Override
     public String toString() {
         return client.getUsername() + " " + arrangement.getName() + " Ukupna cijena: " + totalPrice + "\n";

@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class AdminViewer {
+    public final static String SUCCESSFUL_ADMIN_REGISTRATION = "Admin successfully added!";
+
     public static int adminCounter(List<User> users) {
         return (int) users
                 .stream()
@@ -28,5 +30,13 @@ public class AdminViewer {
                 admin.getUsername(),
                 admin.getPassword()
         );
+    }
+
+    public static List<Admin> getAdmins(List<User> users) {
+        return users
+                .stream()
+                .filter(user -> user instanceof Admin)
+                .map(user -> (Admin) user)
+                .toList();
     }
 }

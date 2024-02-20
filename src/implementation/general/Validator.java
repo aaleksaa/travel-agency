@@ -2,6 +2,7 @@ package implementation.general;
 
 import exceptions.EmptyInputException;
 import exceptions.InvalidInputException;
+import exceptions.PasswordMismatchException;
 import exceptions.UnsuccessfulReservationException;
 import javafx.scene.control.TextInputControl;
 import models.entities.Arrangement;
@@ -40,6 +41,11 @@ public class Validator {
     public static void isUsernameAvailable(List<User> users, String username) throws InvalidInputException {
         if (users.stream().anyMatch(user -> user.isUsernameMatching(username)))
             throw new InvalidInputException("Username " + username + " is taken!");
+    }
+
+    public static void passwordMatch(String password, String confirmPassword) throws PasswordMismatchException {
+        if (!password.equals(confirmPassword))
+            throw new PasswordMismatchException();
     }
 
     public static void resetInputs(TextInputControl[] inputs) {

@@ -2,10 +2,8 @@ package controllers;
 
 import exceptions.EmptyInputException;
 import exceptions.InvalidInputException;
-import implementation.general.Login;
-import implementation.general.Navigation;
-import implementation.general.TransactionManager;
-import implementation.general.Validator;
+import implementation.general.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputControl;
@@ -40,11 +38,11 @@ public class LoginController {
                 );
             else
                 Navigation.toAdminPage(stage, (Admin) user);
-
         } catch (EmptyInputException e) {
-            throw new RuntimeException(e);
+            MessageDisplay.showAlert(e.getMessage(), Alert.AlertType.INFORMATION);
         } catch (InvalidInputException e) {
-            throw new RuntimeException(e);
+            MessageDisplay.showAlert(e.getMessage(), Alert.AlertType.INFORMATION);
+            Validator.resetInputs(inputs);
         }
     }
 }
