@@ -1,8 +1,9 @@
 package models.entities;
 
+import interfaces.Identifiable;
 import models.enums.RoomType;
 
-public class Accommodation {
+public class Accommodation implements Identifiable {
     private final int id;
     private final int starReview;
     private final String name;
@@ -17,6 +18,7 @@ public class Accommodation {
         this.pricePerNight = pricePerNight;
     }
 
+    @Override
     public int getId() {
         return id;
     }

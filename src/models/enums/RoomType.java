@@ -1,9 +1,9 @@
 package models.enums;
 
 public enum RoomType {
-    SINGLE_ROOM("Singleroom"),
-    DOUBLE_ROOM("Doubleroom"),
-    TRIPLE_ROOM("Tripleroom"),
+    SINGLE_ROOM("Single-room"),
+    DOUBLE_ROOM("Double-room"),
+    TRIPLE_ROOM("Triple-room"),
     APARTMENT("Apartment");
 
     private String type;
@@ -14,9 +14,9 @@ public enum RoomType {
 
     public static RoomType fromString(String type) {
         return switch (type) {
-            case "Singleroom" -> SINGLE_ROOM;
-            case "Doubleroom" -> DOUBLE_ROOM;
-            case "Tripleroom" -> TRIPLE_ROOM;
+            case "Single-room" -> SINGLE_ROOM;
+            case "Double-room" -> DOUBLE_ROOM;
+            case "Triple-room" -> TRIPLE_ROOM;
             case "Apartment" -> APARTMENT;
             default -> null;
         };

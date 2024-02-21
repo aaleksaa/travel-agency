@@ -1,12 +1,13 @@
 package models.entities;
 
+import interfaces.Identifiable;
 import models.enums.Transport;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 
-public class Arrangement {
+public class Arrangement implements Identifiable {
     private final int id;
     private final String name;
     private final String destination;
@@ -35,6 +36,7 @@ public class Arrangement {
         this.accommodation = accommodation;
     }
 
+    @Override
     public int getId() {
         return id;
     }

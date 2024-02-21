@@ -21,6 +21,7 @@ import models.entities.Reservation;
 import models.entities.Agency;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 
 public class AdminPage extends Application {
     private final Admin admin;
@@ -34,10 +35,11 @@ public class AdminPage extends Application {
     public void start(Stage stage) throws Exception {
         controller = new AdminController();
         HBox root = new HBox(20);
+        root.setId("root");
 
-        setupScene(root, stage, 4);
+        setupScene(root, stage, 1);
         Scene scene = new Scene(root, 1100, 750);
-        scene.getStylesheets().add(getClass().getResource("css/admin.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("css/style1.css").toExternalForm());
 
         stage.setScene(scene);
         stage.setTitle("Travelsphere - Admin");
@@ -46,20 +48,22 @@ public class AdminPage extends Application {
 
     private void sidebarGUI(HBox root, Stage stage) {
         VBox vbSidebar = new VBox(50);
-        ImageView img = new ImageView(new Image("file:img/logo.png"));
         VBox vbMenu = new VBox(25);
-        vbSidebar.getChildren().addAll(img, vbMenu);
 
-        Button btnAdmins = new Button("Admin Panel");
-        Button btnReservations = new Button("Reservations List");
-        Button btnAddArrangement = new Button("Add Arrangement");
-        Button btnCancelArrangement = new Button("Cancel Arrangement");
+        ImageView img = new ImageView(new Image("file:img/logo.png"));
+        Button btnAdmins = new Button("Admins");
+        Button btnReservations = new Button("View reservations");
+        Button btnAddArrangement = new Button("Add arrangement");
+        Button btnCancelArrangement = new Button("Cancel arrangement");
         Button btnLogout = new Button("Logout");
-        vbMenu.getChildren().addAll(btnAdmins, btnReservations, btnAddArrangement, btnCancelArrangement, btnLogout);
 
-        vbSidebar.getStyleClass().add("sidebar");
+        vbSidebar.getChildren().addAll(img, vbMenu);
+        vbMenu.getChildren().addAll(btnAdmins, btnReservations, btnAddArrangement, btnCancelArrangement, btnLogout);
+        root.getChildren().add(vbSidebar);
+
         img.setFitWidth(150);
         img.setFitHeight(150);
+        vbSidebar.getStyleClass().add("sidebar");
         btnAdmins.getStyleClass().add("btn1");
         btnAddArrangement.getStyleClass().add("btn1");
         btnCancelArrangement.getStyleClass().add("btn1");
@@ -71,8 +75,6 @@ public class AdminPage extends Application {
         btnAddArrangement.setOnAction(e -> setupScene(root, stage, 3));
         btnCancelArrangement.setOnAction(e -> setupScene(root, stage, 4));
         btnLogout.setOnAction(e -> Navigation.toLoginPage(stage));
-
-        root.getChildren().add(vbSidebar);
     }
 
     private void setupScene(HBox root, Stage stage, int scene) {
@@ -96,27 +98,128 @@ public class AdminPage extends Application {
         Label lblMessage = new Label();
 
         vbCancelArrangement.getChildren().addAll(txtTitle, lvArrangements, btnCancel, lblMessage);
+        root.getChildren().add(vbCancelArrangement);
 
+        lvArrangements.getItems().addAll(ArrangementViewer.arrangementsOnOffer(controller.getAgency().getArrangements()));
+        lvArrangements.setPrefWidth(700);
         vbCancelArrangement.getStyleClass().add("rightSide");
         txtTitle.getStyleClass().add("title");
-        lvArrangements.setPrefWidth(700);
-        lvArrangements.setPrefHeight(350);
         btnCancel.getStyleClass().add("btn2");
-        lvArrangements.getItems().addAll(ArrangementViewer.arrangementsOnOffer(controller.getAgency().getArrangements()));
 
-        btnCancel.setOnAction(e -> {
-            try {
-                controller.cancelBtnEvent(lvArrangements.getSelectionModel().getSelectedItem(), lblMessage, lvArrangements);
-            } catch (SQLException ex) {
-                MessageDisplay.showAlert(Agency.DATABASE_ERROR, Alert.AlertType.INFORMATION);
-            }
-        });
-
-        root.getChildren().add(vbCancelArrangement);
+        btnCancel.setOnAction(e ->
+                controller.cancelBtnEvent(lvArrangements.getSelectionModel().getSelectedItem(), lblMessage, lvArrangements)
+        );
     }
 
     private void addArrangementGUI(HBox root) {
+        HBox hbAddArrangement = new HBox(300);
+        VBox vbTrip = new VBox(20);
+        VBox vbTrip2 = new VBox(20);
 
+        Text txtTrip = new Text("Add trip");
+        TextField tfTripName = new TextField();
+        TextField tfDestination = new TextField();
+        TextField tfArrangementPrice = new TextField();
+        TextField tfAccommodationName = new TextField();
+        TextField tfStarReview = new TextField();
+        TextField tfPricePerNight = new TextField();
+        DatePicker dpTripDate = new DatePicker();
+        DatePicker dpArrivalDate = new DatePicker();
+        ChoiceBox<String> cbTransport = new ChoiceBox<>();
+        ChoiceBox<String> cbRoomType = new ChoiceBox<>();
+        Button btnAddTrip = new Button("Add");
+
+        Text txtTrip2 = new Text("Add one day trip");
+        TextField tfTripName2 = new TextField();
+        TextField tfDestination2 = new TextField();
+        TextField tfPrice = new TextField();
+        DatePicker dpTripDate2 = new DatePicker();
+        Button btnAddOneDayTrip = new Button("Add");
+
+        hbAddArrangement.getChildren().addAll(vbTrip, vbTrip2);
+        vbTrip.getChildren().addAll(
+                txtTrip,
+                tfTripName,
+                tfDestination,
+                cbTransport,
+                dpTripDate,
+                dpArrivalDate,
+                tfArrangementPrice,
+                tfAccommodationName,
+                tfStarReview,
+                cbRoomType,
+                tfPricePerNight,
+                btnAddTrip
+        );
+        vbTrip2.getChildren().addAll(
+                txtTrip2,
+                tfTripName2,
+                tfDestination2,
+                dpTripDate2,
+                tfPrice,
+                btnAddOneDayTrip
+        );
+        root.getChildren().add(hbAddArrangement);
+
+        cbTransport.getSelectionModel().selectFirst();
+        cbRoomType.getSelectionModel().selectFirst();
+        cbTransport.getItems().addAll("Select transport", "Bus", "Plane", "Self-transport");
+        cbRoomType.getItems().addAll("Select room type", "Single-room", "Double-room", "Triple-room", "Apartment");
+        cbTransport.getSelectionModel().selectFirst();
+        cbRoomType.getSelectionModel().selectFirst();
+        hbAddArrangement.getStyleClass().add("rightSide");
+        txtTrip.getStyleClass().add("title");
+        txtTrip2.getStyleClass().add("title");
+        btnAddTrip.getStyleClass().add("btn2");
+        btnAddOneDayTrip.getStyleClass().add("btn2");
+        dpTripDate2.setPromptText("Trip date");
+        dpTripDate.setPromptText("Trip date");
+        dpArrivalDate.setPromptText("Arrival date");
+        tfTripName.setPromptText("Trip name");
+        tfTripName2.setPromptText("Trip name");
+        tfDestination.setPromptText("Destination");
+        tfDestination2.setPromptText("Destination");
+        tfArrangementPrice.setPromptText("Arrangement price");
+        tfPrice.setPromptText("Arrangement price");
+        tfAccommodationName.setPromptText("Accommodation name");
+        tfStarReview.setPromptText("Accommodation star review");
+        tfPricePerNight.setPromptText("Price per night");
+
+        dpTripDate.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || !date.isAfter(LocalDate.now()));
+            }
+        });
+
+        dpTripDate2.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || !date.isAfter(LocalDate.now()));
+            }
+        });
+
+
+
+        btnAddOneDayTrip.setOnAction(e -> controller.addOneDayTripEvent(
+                tfTripName2,
+                tfDestination2,
+                dpTripDate2,
+                tfPrice
+        ));
+
+        btnAddTrip.setOnAction(e -> controller.addTripEvent(
+                tfTripName,
+                tfDestination,
+                cbTransport,
+                dpTripDate,
+                dpArrivalDate,
+                tfArrangementPrice,
+                tfAccommodationName,
+                tfStarReview,
+                cbRoomType,
+                tfPricePerNight
+        ));
     }
 
     private void adminsGUI(HBox root) {
@@ -163,7 +266,6 @@ public class AdminPage extends Application {
         hbRevenue.getChildren().addAll(lblRevenue, lblToPay);
 
         ListView<Reservation> lvReservations = new ListView<>();
-        lvReservations.getItems().addAll(controller.getAgency().getReservations());
         Label lblInfo = new Label();
 
         VBox vbClients = new VBox(10);
@@ -173,13 +275,14 @@ public class AdminPage extends Application {
 
         vbReservations.getChildren().addAll(hbRevenue, lvReservations, lblInfo, vbClients);
 
+        lvReservations.getItems().addAll(controller.getAgency().getReservations());
+        lvReservations.setPrefWidth(700);
         lblRevenue.getStyleClass().add("title");
         lblToPay.getStyleClass().add("title");
-        vbReservations.getStyleClass().add("rightSide");
-        lvReservations.setPrefWidth(700);
-        vbClients.setVisible(false);
         lblClients.getStyleClass().add("title2");
         lblInfo.getStyleClass().add("title2");
+        vbReservations.getStyleClass().add("rightSide");
+        vbClients.setVisible(false);
 
 
         lvReservations.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
