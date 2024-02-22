@@ -81,6 +81,10 @@ public class Reservation {
         return isClientMatching(c) && reservationType == rt;
     }
 
+    public boolean isCancellationAvailable() {
+        return arrangement.daysUntilTrip() >= Arrangement.PAYMENT_DEADLINE_END && reservationType == ReservationType.ACTIVE;
+    }
+
     public boolean isWithinThreeDayDeadline() {
         return !isTotallyPaid() && arrangement.isInDeadline();
     }

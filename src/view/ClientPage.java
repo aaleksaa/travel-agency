@@ -1,5 +1,6 @@
 package view;
 
+import controllers.ClientController;
 import implementation.client.ArrangementViewer;
 import implementation.general.Navigation;
 import javafx.application.Application;
@@ -15,19 +16,24 @@ import javafx.stage.Stage;
 import models.entities.Arrangement;
 import models.entities.BankAccount;
 import models.entities.Client;
+import models.enums.RoomType;
+import models.enums.Transport;
 
 import java.time.LocalDate;
 
 public class ClientPage extends Application {
     private final Client client;
     private final BankAccount bankAccount;
+    private ClientController controller;
 
     public ClientPage(Client client, BankAccount bankAccount) {
         this.client = client;
         this.bankAccount = bankAccount;
     }
+
     @Override
     public void start(Stage stage) throws Exception {
+        controller = new ClientController();
         HBox root = new HBox(20);
         root.setId("root");
 
@@ -45,7 +51,7 @@ public class ClientPage extends Application {
         sidebarGUI(root, stage);
 
         switch (scene) {
-            case 2: arrangementsGUI(root); break;
+            case 2: arrangementsGUI(root, stage); break;
             case 3: reservationsGUI(root, stage); break;
         }
     }
@@ -78,14 +84,14 @@ public class ClientPage extends Application {
         root.getChildren().add(vbSidebar);
     }
 
-    private void arrangementsGUI(HBox root) {
+    private void arrangementsGUI(HBox root, Stage stage) {
         VBox vbArrangements = new VBox(20);
 
         HBox hbSort = new HBox(20);
         RadioButton rb1 = new RadioButton("Trip date");
         RadioButton rb2 = new RadioButton("Price");
         ChoiceBox<String> cbSort = new ChoiceBox<>();
-        cbSort.getItems().addAll("Sort criteria", "Ascending", "Descending");
+        cbSort.getItems().addAll("Ascending", "Descending");
         Button btnSort = new Button("Sort");
         hbSort.getChildren().addAll(rb1, rb2, cbSort, btnSort);
 
@@ -115,16 +121,20 @@ public class ClientPage extends Application {
         hb2.getChildren().addAll(cbRoomType, cbTransport, btnFilter, btnReset);
 
         ListView<Arrangement> lv = new ListView<>();
+        lv.getItems().addAll(ArrangementViewer.arrangementsOnOffer(controller.getAgency().getArrangements()));
 
         HBox hbReserve = new HBox(10);
         Button btnReserve = new Button("Reserve");
         Label lblMessage = new Label();
         hbReserve.getChildren().addAll(btnReserve, lblMessage);
 
-        vbArrangements.getChildren().addAll(hbSort, vbFilter, lv, btnReserve);
+        vbArrangements.getChildren().addAll(hbSort, vbFilter, lv, hbReserve);
 
         root.getChildren().add(vbArrangements);
 
+        hbReserve.setAlignment(Pos.CENTER_LEFT);
+        rb1.setSelected(true);
+        cbSort.getSelectionModel().selectFirst();
         cbTransport.getSelectionModel().selectFirst();
         cbRoomType.getSelectionModel().selectFirst();
         hb1.setAlignment(Pos.CENTER_LEFT);
@@ -142,6 +152,33 @@ public class ClientPage extends Application {
         tfPrice.setPromptText("Price");
         tfDestination.setPromptText("Destination");
         tfStarReview.setPromptText("Star review");
+
+        btnSort.setOnAction(e -> {
+            if (rb1.isSelected())
+                ArrangementViewer.sortListView(lv, 1, cbSort.getValue());
+            else
+                ArrangementViewer.sortListView(lv, 2, cbSort.getValue());
+        });
+
+
+        btnFilter.setOnAction(e -> lv.getItems().setAll(ArrangementViewer.filterArrangements(
+                controller.getAgency().getArrangements(),
+                tfPrice.getText(),
+                tfDestination.getText(),
+                tfStarReview.getText(),
+                RoomType.fromString(cbRoomType.getValue()),
+                Transport.fromString(cbTransport.getValue()),
+                "uradi",
+                "datum"
+        )));
+
+        btnReserve.setOnAction(e -> controller.reservationBtnEvent(
+                stage,
+                lblMessage,
+                lv.getSelectionModel().getSelectedItem(),
+                client,
+                bankAccount
+        ));
     }
 
     private void reservationsGUI(HBox root, Stage stage) {

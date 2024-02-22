@@ -1,12 +1,22 @@
 package implementation.client;
 
+import database.Database;
+import implementation.general.TransactionManager;
+import models.entities.BankAccount;
 import models.entities.Reservation;
 import models.enums.ReservationType;
 import models.entities.Client;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class ReservationManager {
+    public final static String RESERVATION_NOT_SELECTED = "Reservation is not selected!";
+    public final static String CANCEL_UNAVAILABLE = "This reservation can't be canceled!";
+    public final static String SUCCESSFUL_RESERVATION_CANCEL = "Reservation is canceled!\nBalance: ";
+
+
+
     public static void addReservation(List<Reservation> reservations, Reservation reservation) {
         reservations.add(reservation);
 
@@ -46,5 +56,11 @@ public class ReservationManager {
                 .sum();
     }
 
+    public static void clientReservationCancel(Reservation res, BankAccount clientBank, BankAccount agencyBank) throws SQLException {
+        TransactionManager.performTransaction(clientBank, agencyBank, res.getPaidAmount(), true);
+        res.setPaidAmount(0);
+        res.setReservationType(ReservationType.CANCELED);
+        Database.updateReservationPaidAmount(res.getClient().getId(), res.getArrangement().getId(), 0);
+    }
 
 }

@@ -114,11 +114,11 @@ public class Arrangement implements Identifiable {
     }
 
     private String oneDayTripToString() {
-        return name + " | " + destination + " | " + calculateTotalPrice()  + " | " + transport + " | " + arrivalDate + " | " + tripDate;
+        return name + " | " + destination + " | " + calculateTotalPrice()  + " | " + transport + " | " + tripDate + " | " + arrivalDate;
     }
 
     private String tripToString() {
-        return name + " | " + destination + " | " + calculateTotalPrice()  + " | " + transport + " | " + arrivalDate + " | " + tripDate + " | " + accommodation;
+        return name + " | " + destination + " | " + calculateTotalPrice()  + " | " + transport + " | " + tripDate + " | " + arrivalDate + " | " + accommodation;
     }
 
     @Override

@@ -20,6 +20,18 @@
     -fx-max-width: 800px;
 }
 
+.error {
+    -fx-text-fill: red;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.success {
+    -fx-text-fill: green;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
 .btn1 {
     -fx-background-color: white;
     -fx-text-fill: #cc5803;

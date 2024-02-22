@@ -1,5 +1,7 @@
 package implementation.client;
 
+import com.mysql.cj.xdevapi.DeleteStatementImpl;
+import javafx.scene.control.ListView;
 import models.entities.Arrangement;
 import models.enums.RoomType;
 import models.enums.Transport;
@@ -38,5 +40,16 @@ public class ArrangementViewer {
                 .ofNullable(arrangement.getAccommodation())
                 .map(accommodation -> accommodation.getStarReview() == Integer.parseInt(starReview))
                 .orElse(false);
+    }
+
+    public static void sortListView(ListView<Arrangement> lv, int criteria, String sort) {
+        if (criteria == 1 && sort.equals("Ascending"))
+            lv.getItems().sort(Arrangement.tripDateAscending);
+        else if (criteria == 1 && sort.equals("Descending"))
+            lv.getItems().sort(Arrangement.tripDateDescending);
+        else if (criteria == 2 && sort.equals("Ascending"))
+            lv.getItems().sort(Arrangement.priceAscending);
+        else if (criteria == 2 && sort.equals("Descending"))
+            lv.getItems().sort(Arrangement.priceDescending);
     }
 }
