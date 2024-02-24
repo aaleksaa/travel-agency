@@ -1,6 +1,4 @@
-/* 0C254B */
-
-.root {
+#root-auth {
     -fx-background-image: url("file:img/background3.jpg");
     -fx-background-size: cover;
 }
@@ -21,34 +19,10 @@
     -fx-background-radius: 20px;
 }
 
-Label {
+.login Label {
     -fx-text-fill: #cc5803;
     -fx-font-size: 18px;
 }
-
-TextField, PasswordField {
-    -fx-padding: 5px;
-    -fx-background-color: transparent;
-    -fx-border-width: 0 0 2 0;
-    -fx-border-color: #cc5803;
-    -fx-max-width: 250px;
-    -fx-font-size: 16px;
-    -fx-text-fill: black;
-}
-
-.btn1 {
-    -fx-text-fill: #0C254B;
-    -fx-font-weight: bold;
-    -fx-background-color: transparent;
-    -fx-font-size: 18px;
-    -fx-transition: 0.3s;
-}
-
-.btn1:hover {
-    -fx-cursor: hand;
-    -fx-underline: true;
-}
-
 
 .btn {
     -fx-text-fill: white;
@@ -60,4 +34,300 @@ TextField, PasswordField {
 .btn:hover {
     -fx-background-color: rgba(204, 88, 3, 0.8);
     -fx-cursor: hand;
+}
+
+.register-btn {
+    -fx-text-fill: #0C254B;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+    -fx-font-size: 18px;
+    -fx-transition: 0.3s;
+}
+
+.register-btn:hover {
+    -fx-cursor: hand;
+    -fx-underline: true;
+}
+
+#root {
+    -fx-background-image: url("file:img/background.jpg");
+    -fx-background-size: cover;
+    -fx-padding: 15px;
+}
+
+.sidebar {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+    -fx-padding: 30px;
+    -fx-effect: dropshadow(two-pass-box, #AAAAAA, 5, 0, 0, 4);
+}
+
+.rightSide {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+    -fx-padding: 30px;
+    -fx-effect: dropshadow(two-pass-box, #AAAAAA, 5, 0, 0, 4);
+    -fx-min-width: 800px;
+    -fx-max-width: 800px;
+}
+
+.btn1 {
+    -fx-background-color: white;
+    -fx-text-fill: #cc5803;
+    -fx-border-radius: 10px;
+    -fx-max-width: 200px;
+    -fx-font-size: 16px;
+    -fx-padding: 5px;
+    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 5, 0, 0, 6);
+}
+
+.btn2 {
+    -fx-background-color: #cc5803;
+    -fx-text-fill: white;
+    -fx-border-radius: 10px;
+    -fx-max-width: 200px;
+    -fx-font-size: 16px;
+    -fx-padding: 5px;
+    -fx-effect: dropshadow(three-pass-box, #DDDDDD, 5, 0, 0, 6);
+}
+
+.btn1, .btn2 {
+    -fx-cursor: hand;
+}
+
+.title {
+    -fx-text-fill: #0C254B;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+}
+
+.title2 {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #cc5803;
+}
+
+#popup {
+    -fx-background-color: white;
+    -fx-pref-width: 400px;
+    -fx-pref-height: 200px;
+    -fx-padding: 15px;
+    -fx-border-width: 3px;
+    -fx-border-color: #0C254B;
+    -fx-background-radius: 15px;
+    -fx-border-radius: 15px;
+    -fx-effect: dropshadow(two-pass-box, #AAAAAA, 5, 0, 0, 4);
+}
+
+
+#popup Label {
+    -fx-font-size: 16px;
+    -fx-text-fill: red;
+    -fx-font-weight: 500;
+}
+
+#popup Text {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-fill: #cc5803;
+}
+
+.list-view {
+    -fx-background-color: #f5f5f5;
+    -fx-font-size: 16px;
+}
+
+.list-cell {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #333333;
+    -fx-padding: 10;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.1) , 5, 0.0 , 0 , 1 );
+    -fx-background-insets: 0, 0 0 1 0;
+}
+
+.list-cell:hover {
+    -fx-background-color: #ecf0f1;
+    -fx-cursor: hand;
+}
+
+.list-cell:selected {
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+}
+
+.list-view:focused {
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color: transparent;
+}
+
+.list-view:focused .list-cell:selected {
+    -fx-background-color: #cc5803;
+}
+
+.scroll-bar:vertical {
+    -fx-background-color: #ecf0f1;
+}
+
+.scroll-bar:horizontal {
+    -fx-background-color: #ecf0f1;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #cc5803;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: #bdc3c7;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-background-color: #ffffff;
+    -fx-shape: "M0,0 L5,5 L10,0 Z";
+}
+
+TextField, PasswordField {
+    -fx-padding: 5px;
+    -fx-background-color: transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: #cc5803;
+    -fx-max-width: 200px;
+    -fx-font-size: 15px;
+    -fx-text-fill: black;
+}
+
+.error {
+    -fx-text-fill: red;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.success {
+    -fx-text-fill: green;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.choice-box {
+    -fx-background-color: #cc5803;
+    -fx-mark-color: white;
+    -fx-pref-width: 200px;
+}
+
+.choice-box .context-menu {
+    -fx-background-color: #cc5803;
+    -fx-pref-width: 200px;
+}
+
+.choice-box .menu-item:focused {
+    -fx-background-color: white;
+}
+
+.choice-box > .label {
+    -fx-text-fill: white;
+}
+
+.choice-box .menu-item > .label {
+    -fx-text-fill: white;
+}
+
+.choice-box .menu-item:focused > .label {
+    -fx-text-fill: #cc5803;
+}
+
+.choice-box .menu-item:selected {
+    -fx-text-fill: white;
+}
+
+.date-picker {
+    -fx-pref-width: 200px;
+}
+
+.date-picker .arrow-button {
+	-fx-background-color: #cc5803;
+	-fx-background-radius: 0;
+}
+
+.date-picker .arrow-button:hover {
+	-fx-background-color: #0C254B ;
+}
+
+.date-picker .arrow-button .arrow {
+	-fx-background-color: white;
+}
+
+.date-picker .cell {
+	-fx-background-color: white;
+}
+
+.date-picker .cell:hover {
+	-fx-background-color: #d1d1d1;
+}
+
+.date-picker .cell:focused {
+	-fx-background-color: #d1d1d1;
+}
+
+.date-picker .selected {
+	-fx-background-color: #cc5803;
+	-fx-text-fill: white;
+}
+
+.date-picker .selected:focused {
+	-fx-background-color: #cc5803;
+	-fx-text-fill: white;
+}
+
+.date-picker-popup  {
+	-fx-border-color: transparent;
+}
+
+.date-picker-popup .month-year-pane {
+	-fx-background-color: #cc5803;
+}
+
+.date-picker-popup .month-year-pane .label {
+	-fx-text-fill: white;
+}
+
+.date-picker-popup .week-number-cell {
+	-fx-text-fill: #0C254B;
+}
+
+.date-picker-popup .spinner .button .left-arrow, .date-picker-popup .spinner .button .right-arrow {
+	-fx-background-color: white;
+}
+
+RadioButton {
+    -fx-text-fill: #cc5803;
+    -fx-font-weight: bold;
+}
+
+.radio-button .radio {
+    -fx-border-width: 1px;
+    -fx-border-color: #cc5803;
+    -fx-background-color: white;
+    -fx-background-image: null;
+    -fx-border-radius: 15px;
+    -fx-padding: 4px;
+}
+.radio-button .radio:selected {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+
+.radio-button -radio:armed {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button -radio:determinate {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button -radio:indeterminate {
+    -fx-background-color: white;
+    -fx-background-image: null;
+}
+.radio-button .dot {
+    -fx-background-radius: 15px;
+    -fx-padding: 8px;
 }

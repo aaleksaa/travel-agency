@@ -12,6 +12,7 @@ import java.util.List;
 public class TransactionManager {
     /**
      * Updates the balance of the client and agency bank accounts in the database.
+     *
      * @param clientBank  The bank account of the client.
      * @param agencyBank  The bank account of the agency.
      * @throws SQLException if a SQL exception occurs while updating the balances in the database.
@@ -23,6 +24,7 @@ public class TransactionManager {
 
     /**
      * Performs a transaction between two bank accounts.
+     *
      * @param clientBank  The bank account of the client.
      * @param agencyBank  The bank account of the agency.
      * @param amount      The amount to be transacted.
@@ -43,6 +45,7 @@ public class TransactionManager {
 
     /**
      * Retrieves the bank account corresponding to the given account number from the provided list of bank accounts.
+     *
      * @param bankAccounts  The list of bank accounts.
      * @param accountNumber The account number to retrieve the bank account.
      * @return The BankAccount object if found, or null if not found.

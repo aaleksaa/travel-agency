@@ -86,11 +86,12 @@ public class Database {
         List<Client> clients = getClients();
         List<Admin> admins = getAdmins();
         List<User> users = new ArrayList<>();
+
         users.addAll(admins);
         users.addAll(clients);
+
         return users;
     }
-
 
     public static List<Accommodation> getAccommodations() throws SQLException {
         return getObjects("smjestaj", resultSet ->
@@ -118,15 +119,6 @@ public class Database {
                         )
         );
     }
-
-    private static Accommodation getAccommodationByID(int id) throws SQLException {
-        return getAccommodations()
-                .stream()
-                .filter(a -> a.getId() == id)
-                .findFirst()
-                .orElse(null);
-    }
-
     public static List<Reservation> getReservations() throws SQLException {
         return getObjects("rezervacija", resultSet ->
                 new Reservation(
@@ -143,6 +135,14 @@ public class Database {
         return getBankAccounts()
                 .stream()
                 .filter(BankAccount::isAgencyBankAccount)
+                .findFirst()
+                .orElse(null);
+    }
+
+    private static Accommodation getAccommodationByID(int id) throws SQLException {
+        return getAccommodations()
+                .stream()
+                .filter(a -> a.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
@@ -218,21 +218,6 @@ public class Database {
         connection.close();
     }
 
-
-    public static void addReservation(int clientID, int arrangementID, double totalPrice, double paidAmount) throws SQLException {
-        DBConnect();
-        String SQLQuery = "INSERT INTO rezervacija (Klijent_id, Aranzman_id, ukupna_cijena, placena_cijena) VALUES (?, ?, ?, ?)";
-
-        PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
-        preparedStatement.setInt(1, clientID);
-        preparedStatement.setString(2, "" + arrangementID);
-        preparedStatement.setString(3, "" + totalPrice);
-        preparedStatement.setString(4, "" + paidAmount);
-
-        preparedStatement.executeUpdate();
-        connection.close();
-    }
-
     public static void registerAdmin(int id, String firstName, String lastName, String username, String password) throws SQLException {
         DBConnect();
         String SQLQuery = "INSERT INTO admin (id, ime, prezime, korisnicko_ime, lozinka) VALUES (?, ?, ?, ?, ?)";
@@ -277,6 +262,20 @@ public class Database {
         preparedStatement.setDate(6, Date.valueOf(arrivalDate));
         preparedStatement.setString(7, price + "");
         preparedStatement.setObject(8, accommodationID);
+
+        preparedStatement.executeUpdate();
+        connection.close();
+    }
+
+    public static void addReservation(int clientID, int arrangementID, double totalPrice, double paidAmount) throws SQLException {
+        DBConnect();
+        String SQLQuery = "INSERT INTO rezervacija (Klijent_id, Aranzman_id, ukupna_cijena, placena_cijena) VALUES (?, ?, ?, ?)";
+
+        PreparedStatement preparedStatement = connection.prepareStatement(SQLQuery);
+        preparedStatement.setInt(1, clientID);
+        preparedStatement.setString(2, "" + arrangementID);
+        preparedStatement.setString(3, "" + totalPrice);
+        preparedStatement.setString(4, "" + paidAmount);
 
         preparedStatement.executeUpdate();
         connection.close();

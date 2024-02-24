@@ -1,15 +1,22 @@
 package controllers;
 
+import database.Database;
 import exceptions.EmptyInputException;
 import exceptions.InvalidDateException;
 import exceptions.InvalidInputException;
+import exceptions.PasswordMismatchException;
 import implementation.admin.AdminViewer;
 import implementation.admin.ArrangementManager;
 import implementation.admin.RevenueViewer;
 import implementation.general.LogAlert;
 import implementation.general.MessageDisplay;
 import implementation.general.Validator;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import models.entities.*;
 import models.enums.RoomType;
 import models.enums.Transport;
@@ -197,6 +204,53 @@ public class AdminController {
         lbl.setText(RevenueViewer.reservationInfo(res));
         lv.getItems().clear();
         lv.getItems().addAll(RevenueViewer.findClients(agency.getReservations(), res.getArrangement()));
+    }
+
+    public void changePasswordEvent(Stage stage, Popup info, Admin admin) {
+        info.hide();
+        Popup popup = new Popup();
+        VBox vb = new VBox(15);
+        Text txt = new Text("Change password");
+        Label lblMessage = new Label();
+
+        PasswordField pfOld = new PasswordField();
+        PasswordField pfNew = new PasswordField();
+
+        Button btn = new Button("Change");
+        vb.getChildren().addAll(txt, pfOld, pfNew, btn, lblMessage);
+        popup.getContent().add(vb);
+        popup.show(stage);
+
+        pfOld.setPromptText("Old password");
+        pfNew.setPromptText("New password");
+        vb.setId("popup");
+        vb.setAlignment(Pos.CENTER);
+        btn.getStyleClass().add("btn2");
+
+        btn.setOnAction(e -> changePassword(popup, admin, pfOld, pfNew, lblMessage));
+    }
+
+    private void changePassword(Popup popup, Admin admin, PasswordField pfOld, PasswordField pfNew, Label lbl) {
+        TextInputControl[] inputs = {pfOld, pfNew};
+        try {
+            Validator.areInputsEmpty(inputs);
+            Validator.passwordMatch(admin.getPassword(), pfOld.getText());
+            if (pfNew.getText().equals(pfOld.getText())) {
+                lbl.setText("Set new password!");
+                pfNew.clear();
+            } else {
+                admin.setPassword(pfNew.getText());
+                Database.changePassword(admin.getId(), admin.getPassword(), "admin");
+                popup.hide();
+            }
+        } catch (EmptyInputException e) {
+            lbl.setText(e.getMessage());
+        } catch (PasswordMismatchException e) {
+            lbl.setText(e.getMessage());
+            pfOld.clear();
+        } catch (SQLException e) {
+            lbl.setText(Agency.DATABASE_ERROR);
+        }
     }
 
     public String printAdminCounter() {

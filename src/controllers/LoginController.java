@@ -26,10 +26,13 @@ public class LoginController {
         TextInputControl[] inputs = {tfUsername, pfPassword};
 
         try {
+            // Validation
             Validator.areInputsEmpty(inputs);
             Login.isUserInDatabase(agency.getUsers(), tfUsername.getText(), pfPassword.getText());
+            // Retrieve user
             User user = Login.getUserByUsername(agency.getUsers(), tfUsername.getText());
 
+            // Navigate to application page based on user type
             if (user instanceof Client)
                 Navigation.toClientPage(
                         stage,

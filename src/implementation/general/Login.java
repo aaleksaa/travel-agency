@@ -11,6 +11,7 @@ import java.util.List;
 public class Login {
     /**
      * Checks if a user with the given username and password exists in the provided list of users.
+     *
      * @param users    The list of users.
      * @param username The username to be checked.
      * @param password The password to be checked.
@@ -23,6 +24,7 @@ public class Login {
 
     /**
      * Retrieves the user corresponding to the given username from the provided list of users.
+     *
      * @param users    The list of users.
      * @param username The username to retrieve the user object.
      * @return The User object if found, or null if not found.

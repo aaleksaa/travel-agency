@@ -19,12 +19,14 @@ public class RegistrationPage extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         controller = new RegistrationController();
+
         VBox root = new VBox(10);
-        root.setAlignment(Pos.CENTER);
+        root.setId("root-auth");
         registrationGUI(stage, root);
 
         Scene scene = new Scene(root, 1000, 650);
         scene.getStylesheets().add(getClass().getResource("css/style.css").toExternalForm());
+
         stage.setScene(scene);
         stage.setTitle("Travelsphere - SignIn");
         stage.show();
@@ -35,30 +37,33 @@ public class RegistrationPage extends Application {
         HBox hbForm = new HBox(30);
         VBox vbLeft = new VBox(15);
         VBox vbRight = new VBox(15);
-        hbForm.getChildren().addAll(vbLeft, vbRight);
-        ImageView logo = new ImageView(new Image("file:img/logo.png"));
 
+        ImageView logo = new ImageView(new Image("file:img/logo.png"));
 
         TextField tfFirstName = new TextField();
         TextField tfLastName = new TextField();
         TextField tfPhoneNumber = new TextField();
         TextField tfJmbg = new TextField();
-        vbLeft.getChildren().addAll(tfFirstName, tfLastName, tfPhoneNumber, tfJmbg);
 
         TextField tfBankNumber = new TextField();
         TextField tfUsername = new TextField();
         PasswordField pfPassword = new PasswordField();
         PasswordField pfConfirm = new PasswordField();
-        vbRight.getChildren().addAll(tfBankNumber, tfUsername, pfPassword, pfConfirm);
 
         Button btnSignIn = new Button("Sign In");
-        vbRegistration.getChildren().addAll(logo, hbForm, btnSignIn);
 
-        vbRegistration.getStyleClass().add("registration");
+        hbForm.getChildren().addAll(vbLeft, vbRight);
+        vbLeft.getChildren().addAll(tfFirstName, tfLastName, tfPhoneNumber, tfJmbg);
+        vbRight.getChildren().addAll(tfBankNumber, tfUsername, pfPassword, pfConfirm);
+        vbRegistration.getChildren().addAll(logo, hbForm, btnSignIn);
+        root.getChildren().add(vbRegistration);
+
         vbRegistration.setAlignment(Pos.TOP_CENTER);
         hbForm.setAlignment(Pos.CENTER);
+        root.setAlignment(Pos.CENTER);
         logo.setFitHeight(150);
         logo.setFitWidth(150);
+        vbRegistration.getStyleClass().add("registration");
         btnSignIn.getStyleClass().add("btn");
         tfFirstName.setPromptText("First name");
         tfLastName.setPromptText("Last name");
@@ -68,8 +73,6 @@ public class RegistrationPage extends Application {
         tfUsername.setPromptText("Username");
         pfPassword.setPromptText("Password");
         pfConfirm.setPromptText("Confirm password");
-
-        root.getChildren().add(vbRegistration);
 
         btnSignIn.setOnAction(e -> controller.signInBtnEvent(
                 stage,

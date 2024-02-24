@@ -1,10 +1,7 @@
 package controllers;
 
 import database.Database;
-import exceptions.EmptyInputException;
-import exceptions.InvalidBankAccountException;
-import exceptions.InvalidInputException;
-import exceptions.PasswordMismatchException;
+import exceptions.*;
 import implementation.general.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
@@ -38,6 +35,7 @@ public class RegistrationController {
             Validator.areInputsEmpty(inputs);
             Validator.isUsernameAvailable(agency.getUsers(), tfUsername.getText());
             Registration.isBankAccountInDatabase(agency.getBankAccounts(), tfAccountNumber.getText());
+            Registration.isJmbgValid(agency.getBankAccounts(), tfAccountNumber.getText(), tfJMBG.getText());
             Validator.passwordMatch(pfPassword.getText(), pfConfirmPassword.getText());
 
             Database.registerClient(
@@ -67,6 +65,9 @@ public class RegistrationController {
             pfConfirmPassword.clear();
         } catch (SQLException e) {
             MessageDisplay.showAlert(Agency.DATABASE_ERROR, Alert.AlertType.INFORMATION);
+        } catch (InvalidJmbgException e) {
+            MessageDisplay.showAlert(e.getMessage(), Alert.AlertType.INFORMATION);
+            tfJMBG.clear();
         }
     }
 }

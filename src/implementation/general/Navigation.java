@@ -15,6 +15,7 @@ import view.RegistrationPage;
 public class Navigation {
     /**
      * Closes the current stage and navigates to the login page.
+     *
      * @param stage The stage to be closed.
      */
     public static void toLoginPage(Stage stage) {
@@ -30,6 +31,7 @@ public class Navigation {
 
     /**
      * Closes the current stage and navigates to the registration page.
+     *
      * @param stage The stage to be closed.
      */
     public static void toRegistrationPage(Stage stage) {
@@ -45,6 +47,7 @@ public class Navigation {
 
     /**
      * Closes the current stage and navigates to the client page.
+     *
      * @param stage       The stage to be closed.
      * @param client      The client for whom the page is being displayed.
      * @param bankAccount The bank account associated with the client.
@@ -62,6 +65,7 @@ public class Navigation {
 
     /**
      * Closes the current stage and navigates to the admin page.
+     *
      * @param stage The stage to be closed.
      * @param admin The admin for whom the page is being displayed.
      */

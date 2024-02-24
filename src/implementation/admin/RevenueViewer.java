@@ -22,7 +22,7 @@ public class RevenueViewer {
         if (res.isTotallyPaid())
             return "Client " + res.getClient().getUsername() + " paid arrangement in total!";
         else if (res.isCanceledByClient())
-            return "Client" + res.getClient().getUsername() + " canceled reservation!";
+            return "Client " + res.getClient().getUsername() + " canceled reservation!";
         else if (res.isCanceled() && !res.isCanceledByClient())
             return "Reservation canceled! Client " + res.getClient().getUsername() + " did not make the payment on time!";
         else if (res.isWithinThreeDayDeadline())
